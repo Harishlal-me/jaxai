@@ -1,198 +1,242 @@
-# 🎤 NOVA - Voice-Activated Desktop Assistant
+🎤 Nova Desktop Assistant
+Always-on voice assistant for Windows - Launch your favorite apps with just your voice!
 
-**Nova** is an intelligent voice-activated app launcher with voice responses.
+🌟 Features
 
-Say **"Hey Nova"** → She responds → Clap pattern → App launches!
+✅ Always Running - Starts automatically with Windows
+✅ System Tray Integration - Runs quietly in the background
+✅ Voice Activated - Say "Hey Nova" anytime
+✅ Fast App Launching - Open apps instantly with voice commands
+✅ Customizable - Add your own apps and commands
+✅ Low Resource Usage - Minimal CPU and memory footprint
 
----
 
-## 🌟 Features
+📋 Prerequisites
 
-✅ **Voice Activation** - Say "Hey Nova" to activate  
-✅ **Voice Responses** - Nova talks back to you  
-✅ **Clap Patterns** - Different claps launch different apps  
-✅ **Auto-Exit** - Closes after launching an app  
-✅ **Fully Customizable** - Add any app you want  
-✅ **Cross-Platform** - Windows, Linux, macOS  
+Windows 10/11
+Python 3.9 or higher
+Microphone
+Internet connection (for voice recognition)
 
----
 
-## 🚀 Quick Start
+🚀 Installation
+Step 1: Install Dependencies
+bash# Navigate to the Nova folder
+cd D:\jarvis
 
-### 1. Install Dependencies
-```bash
-pip install SpeechRecognition sounddevice numpy pyttsx3
-```
+# Create virtual environment (if not exists)
+python -m venv .venv
 
-### 2. Run Nova
-```bash
-python nova_launcher.py
-```
+# Activate virtual environment
+.venv\Scripts\activate
 
-### 3. Use It!
-**You:** "Hey Nova"  
-**Nova:** "You called me. Now talk."  
-**You:** 👏👏👏  
-**Nova:** "Launching Valorant!"  
-
----
-
-## 🗣️ Voice Commands
-
-```
-"Hey Nova" + 👏           = WhatsApp
-"Hey Nova" + 👏👏         = VS Code
-"Hey Nova" + 👏👏👏       = Valorant
-"Hey Nova" + 👏👏👏👏     = Chrome
-"Hey Nova" + 👏👏👏👏👏   = Brave
-```
-
----
-
-## 💬 Nova's Voice Responses
-
-| Action | Nova Says |
-|--------|-----------|
-| Wake word detected | "You called me. Now talk." |
-| 1 clap (WhatsApp) | "Opening WhatsApp." |
-| 2 claps (VS Code) | "Launching VS Code. Happy coding!" |
-| 3 claps (Valorant) | "Launching Valorant. Enjoy your game!" |
-| 4 claps (Chrome) | "Opening Chrome for you." |
-| 5 claps (Brave) | "Launching Brave Browser." |
-| No claps | "I didn't hear any claps. Try again." |
-| Unknown pattern | "I don't know that command." |
-
----
-
-## ⚙️ Configuration
-
-Edit `app_config.json` to customize:
-
-```json
-{
-    "1": {
-        "name": "WhatsApp",
-        "windows": "start whatsapp:"
-    }
+# Install required packages
+pip install SpeechRecognition pyaudio pystray pillow
+Step 2: Configure Your Apps
+Edit app_config.json to add your applications:
+json{
+  "1": {
+    "name": "WhatsApp",
+    "windows": "start shell:AppsFolder\\5319275A.WhatsAppDesktop_cv1g1gvanyjgm!App"
+  },
+  "2": {
+    "name": "VS Code",
+    "windows": "code"
+  }
 }
-```
+Step 3: Install to Windows Startup
 
-Add your own apps using `config_editor.py`
+Right-click install_nova.bat
+Select "Run as Administrator"
+Wait for "INSTALLATION COMPLETE!"
+Restart your computer
 
----
 
-## 🎚️ Adjust Sensitivity
+🎯 Usage
+Starting Nova
+Option 1: Automatic (Recommended)
 
-### Voice Detection (if "Hey Nova" is hard to trigger)
-Edit `nova_launcher.py`:
-```python
-self.recognizer.energy_threshold = 300  # Lower = more sensitive
-```
+Nova starts automatically when Windows boots up
+Look for the purple "N" icon in your system tray
 
-### Clap Detection (if claps aren't detected)
-```python
-self.clap_threshold = 0.08  # Lower = more sensitive
-```
+Option 2: Manual
 
-Or run: `python test_clap_values.py`
+Double-click start_nova.bat
+Nova will start in the background
 
----
+Using Voice Commands
 
-## 🐛 Troubleshooting
+Say "Hey Nova" to activate
+Wait for Nova's response: "Nova here. You called me. Now talk."
+Say your command, for example:
 
-**"Hey Nova" not detected:**
-- Lower `energy_threshold` to 200
-- Speak at normal volume
-- Check microphone permissions
+"Open WhatsApp"
+"Launch VS Code"
+"Open Chrome"
+"Start Valorant"
 
-**Claps not detected:**
-- Run `test_clap_values.py`
-- Clap louder
-- Adjust `clap_threshold`
 
-**App won't launch:**
-- Test command manually
-- Check path in `app_config.json`
-- Run as Administrator
 
----
+Available Commands
+Say ThisOpens This"WhatsApp"WhatsApp Desktop"VS Code" / "Code"Visual Studio Code"Chrome" / "Google"Google Chrome"Brave"Brave Browser"Valorant"Valorant Game
+System Tray Options
+Right-click the Nova icon in the system tray:
 
-## 📁 Files
+Toggle Listening - Pause/resume voice detection
+Quit Nova - Stop the assistant
 
-```
-├── nova_launcher.py          # Main application
-├── app_config.json          # App mappings
-├── config_editor.py         # Add/edit apps
-├── test_clap_values.py      # Calibration
-├── requirements.txt         # Dependencies
-└── README.md               # This file
-```
 
----
+📁 File Structure
+D:\jarvis\
+├── nova_desktop_assistant.py    # Main Python script
+├── app_config.json              # App configuration
+├── install_nova.bat             # Startup installer
+├── start_nova.bat               # Manual launcher
+├── start_nova_silent.vbs        # Silent startup script
+├── README.md                    # This file
+└── .venv\                       # Virtual environment
 
-## 🎯 Usage Example
+⚙️ Configuration
+Adding New Apps
 
-```bash
-$ python nova_launcher.py
+Open app_config.json
+Add a new entry with a unique ID:
 
-🎤 Listening for 'Hey Nova'...
-```
+json{
+  "6": {
+    "name": "Spotify",
+    "windows": "start spotify:"
+  }
+}
 
-**You:** "Hey Nova"
+Open nova_desktop_assistant.py
+Add voice command mapping (around line 24):
 
-```
-✅ Wake word detected!
-🔊 Nova: "You called me. Now talk."
-🔔 *BEEP*
+pythonself.voice_commands = {
+    # ... existing commands ...
+    "spotify": "6",
+    "music": "6"
+}
 
-👏 Clap detection active...
-```
+Add voice response (around line 33):
 
-**You:** 👏👏👏
+pythonself.voice_responses = {
+    # ... existing responses ...
+    "6": "Opening Spotify. Enjoy your music!"
+}
+Adjusting Voice Sensitivity
+Edit nova_desktop_assistant.py (around line 121):
+pythonself.recognizer.energy_threshold = 2500  # Lower = more sensitive
 
-```
-👏 CLAP 1 DETECTED!
-👏 CLAP 2 DETECTED!
-👏 CLAP 3 DETECTED!
+🔧 Troubleshooting
+Nova doesn't start automatically
 
-📊 Total claps: 3
-🚀 Launching Valorant...
-🔊 Nova: "Launching Valorant. Enjoy your game!"
-✅ Done! Exiting...
-```
+Check if shortcut exists:
 
----
+Press Win + R, type shell:startup, press Enter
+Look for "Nova Assistant.lnk"
 
-## 🔮 Future Features (Roadmap)
 
-- [ ] Background mode (system tray)
-- [ ] Works from any app/screen
-- [ ] Overlay interface
-- [ ] More voice responses
-- [ ] Offline wake word
-- [ ] Custom wake words
-- [ ] Gesture recognition
+If missing, run install_nova.bat as Administrator again
 
----
+"Hey Nova" not detected
 
-## 💡 Tips
+Check your microphone is working
+Try speaking louder or closer to the mic
+Adjust energy_threshold in the code (see Configuration)
 
-✅ Speak clearly at normal volume  
-✅ Wait for Nova's response before clapping  
-✅ Make sharp, loud claps  
-✅ Stay near microphone (1-2 feet)  
-✅ Use in quiet environment  
+Commands not recognized
 
----
+Speak clearly and wait for Nova's prompt
+Check internet connection (Google Speech API requires it)
+Verify command is in voice_commands dictionary
 
-## 🙏 Credits
+Microphone error on startup
+bashpip install pyaudio
+If that fails, download the wheel file for your Python version from:
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
+App doesn't launch
 
-Built with Python, SpeechRecognition, pyttsx3, sounddevice
+Verify the command in app_config.json works manually
+Test in Command Prompt first
+Check for typos in app paths
 
----
 
-**Say "Hey Nova" and start voice controlling your computer!** 🎤✨
+🛑 Uninstalling
+Remove from Startup
 
-```bash
-python nova_launcher.py
-```
+Press Win + R
+Type: shell:startup
+Delete "Nova Assistant.lnk"
+
+Complete Removal
+
+Remove from startup (above)
+Delete the entire D:\jarvis\ folder
+
+
+🔒 Privacy & Security
+
+Voice data: Sent to Google Speech Recognition API for processing
+No data stored: Nova doesn't save your voice recordings
+Local execution: All app launching happens on your computer
+No telemetry: Nova doesn't send usage data anywhere
+
+
+📝 System Requirements
+
+OS: Windows 10/11
+Python: 3.9+
+RAM: 100-200 MB
+Disk: ~50 MB
+Internet: Required for voice recognition
+
+
+🤝 Support
+If you encounter issues:
+
+Check the Troubleshooting section above
+Verify all dependencies are installed
+Run Nova manually with python nova_desktop_assistant.py to see error messages
+Check that your microphone has proper permissions in Windows Settings
+
+
+📜 Version History
+v1.0 (Current)
+
+Initial release
+Wake word detection
+System tray integration
+Auto-startup support
+Voice command app launching
+
+
+🎓 Tips & Best Practices
+
+Clear speech: Speak clearly and at normal pace
+Wait for prompt: Always wait for "Now talk" before giving commands
+Quiet environment: Works best with minimal background noise
+Good microphone: Use a quality microphone for better recognition
+One command at a time: Give one command, wait for completion
+
+
+📞 Quick Reference
+Starting Nova
+bash# Manual start
+start_nova.bat
+
+# Or from Python
+python nova_desktop_assistant.py
+Installing to Startup
+bash# Run as Administrator
+install_nova.bat
+Voice Flow
+
+"Hey Nova" → Wake word activation
+Wait for response → "Nova here. You called me. Now talk."
+"Open WhatsApp" → Command execution
+Wait for "Work done, sir" → Ready for next "Hey Nova"
+
+
+Made with ❤️ for hands-free productivity
+Nova - Your always-on voice assistant
